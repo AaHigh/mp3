@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="HIGH TOWER DISTRICT : MP3">
-    <meta property="og:description" content="MP3 PLAYER">
+    <meta property="og:description" content="MP3 PLAYER • Skill-Based • Verifiable Human Craft">
     <meta property="og:image" content="https://mp3.ahightower.com/album_art.png">
     <meta property="og:url" content="https://mp3.ahightower.com/">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="HIGH TOWER DISTRICT - MP3">
-    <meta name="twitter:description" content="...">
+    <meta name="twitter:description" content="Original music from AAHIGH • Tower District, Fresno">
     <meta name="twitter:image" content="https://mp3.ahightower.com/album_art.jpg">
 
     <title>AAHIGH • mp3</title>
@@ -33,12 +33,6 @@
             font-family: 'Space Grotesk', 'Inter', sans-serif;
             font-weight: 600;
             letter-spacing: -0.025em;
-        }
-
-        .neon-text {
-            text-shadow: 
-                0 0 10px rgb(255 46 99 / 0.5),
-                0 0 20px rgb(255 46 99 / 0.3);
         }
 
         .section-header {
@@ -143,6 +137,36 @@
             font-variant-numeric: tabular-nums;
             min-width: 1.5rem;
         }
+
+        .album-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+        
+        .album-btn.active {
+            background-color: #ff2e63;
+            color: white;
+            border-color: #ff2e63;
+        }
+
+        .album-btn:hover:not(.active) {
+            background-color: #27251f;
+            transform: translateY(-1px);
+        }
+
+        .artwork-shadow {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 
+                       0 4px 6px -4px rgb(0 0 0 / 0.3);
+        }
+
+        .warning-toast {
+            animation: slideUp 0.3s ease forwards;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
     </style>
 </head>
 <body class="bg-[#0a0a0f] text-white min-h-screen">
@@ -164,7 +188,7 @@
                     <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
                     <span class="text-emerald-400 font-medium">ONLINE</span>
                 </div>
-                <div class="text-zinc-500 text-xs px-2">9 TRACKS</div>
+                <div class="text-zinc-500 text-xs px-2" id="global-track-count">9 TRACKS</div>
             </div>
         </div>
     </header>
@@ -182,23 +206,43 @@
                         <div class="flex-1 h-px bg-gradient-to-r from-[#ff2e63]/40 to-transparent"></div>
                     </div>
                     
-                    <div id="now-playing-title" 
-                         class="display-font text-5xl lg:text-6xl font-semibold tracking-tighter leading-none mb-2 text-white min-h-[64px]">
-                        SELECT A TRACK
+                    <!-- Artwork + Title Row -->
+                    <div class="flex gap-5 items-start">
+                        <!-- Album / Track Artwork -->
+                        <div id="now-playing-art-container" 
+                             class="hidden w-20 h-20 lg:w-24 lg:h-24 flex-shrink-0 rounded-2xl overflow-hidden border border-zinc-700 artwork-shadow bg-zinc-900">
+                            <img id="now-playing-art-img" 
+                                 class="w-full h-full object-cover"
+                                 alt="Album Artwork">
+                        </div>
+                        
+                        <div class="flex-1 min-w-0">
+                            <div id="now-playing-title" 
+                                 class="display-font text-4xl lg:text-5xl font-semibold tracking-tighter leading-none mb-1 text-white min-h-[52px]">
+                                SELECT A TRACK
+                            </div>
+                            
+                            <div id="now-playing-subtitle" 
+                                 class="text-zinc-400 text-lg font-light tracking-tight">
+                                AAHIGH ORIGINAL
+                            </div>
+                            
+                            <!-- Validation / Status Message -->
+                            <div id="playback-status" class="hidden mt-2 text-xs"></div>
+                        </div>
                     </div>
                     
-                    <div id="now-playing-subtitle" 
-                         class="text-zinc-400 text-lg font-light tracking-tight">
-                        AAHIGH ORIGINAL
-                    </div>
-                    
-                    <div class="mt-6 flex items-center gap-x-4 text-xs">
+                    <div class="mt-5 flex items-center gap-x-4 text-xs">
                         <div class="flex items-center gap-x-1.5 text-zinc-400">
                             <i class="fa-solid fa-headset"></i>
-                            <span id="track-counter">— / 6</span>
+                            <span id="track-counter">— / —</span>
                         </div>
                         <div class="px-2.5 py-1 rounded-full bg-zinc-900 text-[10px] font-mono border border-zinc-800" id="track-duration">
                             --:--
+                        </div>
+                        <div id="current-album-badge"
+                             class="hidden px-2.5 py-1 rounded-full bg-zinc-900 text-[10px] font-medium border border-zinc-700 text-zinc-400">
+                            <!-- populated by JS -->
                         </div>
                     </div>
                 </div>
@@ -227,7 +271,7 @@
         </div>
 
         <!-- Player Controls -->
-        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 mb-8">
+        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 mb-6">
             <div class="flex flex-col gap-y-5">
                 
                 <!-- Progress -->
@@ -293,18 +337,34 @@
             </div>
         </div>
 
+        <!-- Albums / Subdirectories Bar -->
+        <div class="mb-6">
+            <div class="flex items-center justify-between mb-3 px-1">
+                <div>
+                    <div class="section-header text-zinc-400">ALBUMS &amp; DIRECTORIES</div>
+                    <div class="text-xs text-zinc-500">FLAT HIERARCHY — EACH SUBDIRECTORY = SEPARATE ALBUM</div>
+                </div>
+                <div class="text-[10px] text-zinc-500 font-mono">SCROLL HORIZONTALLY →</div>
+            </div>
+            
+            <div id="albums-bar" 
+                 class="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin">
+                <!-- Populated dynamically via createAlbumsBar() -->
+            </div>
+        </div>
+
         <!-- Playlist -->
         <div>
             <div class="flex items-center justify-between mb-4 px-1">
                 <div>
                     <div class="section-header text-zinc-400">PLAYLIST</div>
-                    <div class="text-xs text-zinc-500">ORIGINAL MUSIC FROM AAHIGH</div>
+                    <div class="text-xs text-zinc-500" id="playlist-subtitle">ORIGINAL MUSIC FROM AAHIGH</div>
                 </div>
-                <div class="text-[10px] text-zinc-500 font-mono">TAP TO PLAY</div>
+                <div class="text-[10px] text-zinc-500 font-mono">TAP TO PLAY • TAP INFO FOR DETAILS</div>
             </div>
             
             <div id="playlist" 
-                 class="playlist-scroll bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden divide-y divide-zinc-800 max-h-[380px] overflow-y-auto">
+                 class="playlist-scroll bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden divide-y divide-zinc-800 max-h-[420px] overflow-y-auto">
                 <!-- Populated by JS -->
             </div>
         </div>
@@ -318,19 +378,73 @@
                 HIGH TOWER DISTRICT • FRESNO, CALIFORNIA • 2026
             </div>
             <div class="text-[9px] text-zinc-600 mt-1">
-                SKILL-BASED • VERIFIABLE • HUMAN CRAFT
+                SKILL-BASED • VERIFIABLE • HUMAN CRAFT • JSON-DRIVEN METADATA
             </div>
         </div>
     </footer>
 
+    <!-- Simple Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-[100] flex flex-col gap-2"></div>
+
     <script>
-        // Tailwind script
-        function initTailwind() {
-            document.documentElement.style.setProperty('--accent', '#ff2e63');
-        }
-        
-        // Track data
-        const tracks = [
+        // =====================================================
+        // AAHIGH MP3 PLAYER — Enhanced with JSON metadata,
+        // multi-album flat hierarchy, artwork, and runtime
+        // MP3 validation (zero-byte + format checks)
+        // =====================================================
+
+        /*
+          description.json schema (place in same folder as index.html):
+
+          {
+            "albums": [
+              {
+                "id": "root",
+                "name": "HIGH TOWER DISTRICT",
+                "artwork": "album_art.png",     // optional 512x512 cover
+                "tracks": [
+                  {
+                    "file": "cellchorus.mp3",
+                    "title": "CELL CHORUS",
+                    "subtitle": "AAHIGH ORIGINAL",
+                    "description": "Optional longer description...",
+                    "credits": "Written & produced by Aaron Hightower",
+                    "notes": "Recorded in Tower District, 2026",
+                    "derivativeLinks": [
+                      { "label": "Remix", "url": "https://..." }
+                    ],
+                    "artwork": "covers/cellchorus-512.jpg"   // optional per-track 512x512
+                  }
+                ]
+              },
+              {
+                "id": "deep-sessions",
+                "name": "DEEP SESSIONS",
+                "artwork": null,
+                "tracks": [ ... ]   // can live in subfolder; just use "file": "deep/deepbass.mp3"
+              }
+            ]
+          }
+
+          • Subdirectories are treated as flat top-level albums.
+          • If description.json is missing or fails to load, falls back to the 9 built-in tracks as "Root".
+          • Artwork images should be 512x512 for best results (responsive downscaling is handled).
+        */
+
+        let albums = [];
+        let currentAlbumId = 'root';
+        let currentTrackIndex = -1;
+        let isPlaying = false;
+        let isLooping = false;
+        let audio = new Audio();
+        let audioContext = null;
+        let analyser = null;
+        let source = null;
+        let vizRAF = null;
+        let canvas, ctx;
+
+        // Fallback tracks (used when description.json is unavailable)
+        const fallbackTracks = [
             { num: 1, file: "cellchorus.mp3", title: "CELL CHORUS", subtitle: "AAHIGH ORIGINAL" },
             { num: 2, file: "dah-sing-you-larry-t.mp3", title: "DAH SING YOU LARRY T", subtitle: "AAHIGH ORIGINAL" },
             { num: 3, file: "deepbass.mp3", title: "DEEP BASS", subtitle: "AAHIGH ORIGINAL" },
@@ -341,18 +455,145 @@
             { num: 8, file: "san-clemente-tower-trio.mp3", title: "SAN CLEMENTE TOWER TRIO", subtitle: "AAHIGH ORIGINAL" },
             { num: 9, file: "shoes-on-dah-line.mp3", title: "SHOES ON DAH LINE", subtitle: "AAHIGH ORIGINAL" }
         ];
-        
-        let currentTrackIndex = -1;
-        let isPlaying = false;
-        let isLooping = false;
-        let audio = new Audio();
-        let audioContext = null;
-        let analyser = null;
-        let source = null;
-        let vizRAF = null;
-        let canvas, ctx;
-        
-        // Initialize audio element
+
+        function createFallbackAlbums() {
+            return [{
+                id: 'root',
+                name: 'HIGH TOWER DISTRICT',
+                artwork: null,
+                tracks: fallbackTracks.map((t, i) => ({ ...t, num: i + 1 }))
+            }];
+        }
+
+        // Load description.json (rich metadata + multi-album support)
+        async function loadDescriptionJson() {
+            try {
+                const res = await fetch('description.json', { cache: 'no-store' });
+                if (!res.ok) throw new Error('No description.json found');
+
+                const data = await res.json();
+
+                if (Array.isArray(data.albums) && data.albums.length > 0) {
+                    albums = data.albums.map((album, idx) => {
+                        // Ensure every track has a num
+                        const tracks = (album.tracks || []).map((track, tIdx) => ({
+                            num: tIdx + 1,
+                            ...track
+                        }));
+                        return {
+                            id: album.id || `album-${idx}`,
+                            name: album.name || `Album ${idx + 1}`,
+                            artwork: album.artwork || null,
+                            tracks
+                        };
+                    });
+                    currentAlbumId = data.defaultAlbumId || albums[0].id;
+                    console.log('%c[AAHIGH] Loaded description.json with ' + albums.length + ' album(s)', 'color:#0f0');
+                } else {
+                    throw new Error('Invalid albums array in description.json');
+                }
+            } catch (err) {
+                console.warn('%c[AAHIGH] description.json not found or invalid — using fallback 9-track root album', 'color:#f80');
+                albums = createFallbackAlbums();
+                currentAlbumId = 'root';
+            }
+
+            // Update global count badge
+            const totalTracks = albums.reduce((sum, a) => sum + a.tracks.length, 0);
+            document.getElementById('global-track-count').textContent = `${totalTracks} TRACKS`;
+        }
+
+        function getCurrentAlbum() {
+            return albums.find(a => a.id === currentAlbumId) || albums[0];
+        }
+
+        function getCurrentTracks() {
+            return getCurrentAlbum()?.tracks || [];
+        }
+
+        // =====================================================
+        // RUNTIME MP3 VALIDATION
+        // =====================================================
+        async function validateMP3File(filePath, trackTitle) {
+            const statusEl = document.getElementById('playback-status');
+            statusEl.className = 'hidden mt-2 text-xs';
+            statusEl.innerHTML = '';
+
+            try {
+                // 1. HEAD request — check for zero-byte files
+                const headRes = await fetch(filePath, { method: 'HEAD' });
+                const contentLength = headRes.headers.get('content-length');
+
+                if (contentLength && parseInt(contentLength, 10) === 0) {
+                    const msg = `⚠️ ZERO-LENGTH FILE: "${trackTitle}" is 0 bytes and cannot be played.`;
+                    console.error(msg);
+                    showToast(msg, 'error', 6000);
+                    statusEl.innerHTML = `<span class="text-red-400">Zero-length file — skipping</span>`;
+                    statusEl.classList.remove('hidden');
+                    return false;
+                }
+
+                // 2. Basic magic byte check (optional but helpful)
+                try {
+                    const byteRes = await fetch(filePath, {
+                        headers: { 'Range': 'bytes=0-10' }
+                    });
+                    const buffer = await byteRes.arrayBuffer();
+                    const bytes = new Uint8Array(buffer);
+
+                    const isID3 = bytes[0] === 0x49 && bytes[1] === 0x44 && bytes[2] === 0x33;
+                    const isMPEG = bytes[0] === 0xFF && (bytes[1] === 0xFB || bytes[1] === 0xF3 || bytes[1] === 0xFA);
+
+                    if (!isID3 && !isMPEG && contentLength && parseInt(contentLength) > 100) {
+                        // Has content but doesn't look like MP3 at the start
+                        console.warn(`[AAHIGH] "${trackTitle}" has content but magic bytes do not match common MP3 headers.`);
+                    }
+                } catch (e) {
+                    // Range request failed — not critical
+                }
+
+                return true;
+            } catch (err) {
+                console.warn('Validation fetch failed for', filePath, err);
+                return true; // proceed anyway; browser will catch real errors
+            }
+        }
+
+        function showToast(message, type = 'info', duration = 4500) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let bg = 'bg-zinc-800 border-zinc-700';
+            let icon = 'fa-info-circle text-[#00f3ff]';
+            
+            if (type === 'error') {
+                bg = 'bg-red-950/80 border-red-800';
+                icon = 'fa-exclamation-triangle text-red-400';
+            } else if (type === 'warning') {
+                bg = 'bg-amber-950/80 border-amber-700';
+                icon = 'fa-exclamation-circle text-amber-400';
+            }
+
+            toast.className = `warning-toast flex items-start gap-3 px-4 py-3 rounded-2xl border ${bg} shadow-xl max-w-xs text-sm`;
+            toast.innerHTML = `
+                <i class="fa-solid ${icon} mt-0.5"></i>
+                <div class="flex-1 text-zinc-200">${message}</div>
+                <button class="text-zinc-500 hover:text-white ml-2">×</button>
+            `;
+
+            container.appendChild(toast);
+
+            const closeBtn = toast.querySelector('button');
+            closeBtn.onclick = () => toast.remove();
+
+            setTimeout(() => {
+                if (toast.parentNode) toast.remove();
+            }, duration);
+        }
+
+        // =====================================================
+        // AUDIO + VISUALIZER (largely unchanged but enhanced)
+        // =====================================================
         function initAudio() {
             audio.addEventListener('timeupdate', updateProgress);
             audio.addEventListener('ended', handleTrackEnd);
@@ -367,170 +608,131 @@
                 updatePlayButton();
                 stopVisualizer();
             });
-            
-            // Set initial volume
             audio.volume = 0.85;
         }
-        
+
         function updatePlayButton() {
             const icon = document.getElementById('play-icon');
-            if (isPlaying) {
-                icon.classList.remove('fa-play');
-                icon.classList.add('fa-pause');
-            } else {
-                icon.classList.remove('fa-pause');
-                icon.classList.add('fa-play');
-            }
+            icon.classList.toggle('fa-play', !isPlaying);
+            icon.classList.toggle('fa-pause', isPlaying);
         }
-        
+
         function updateDuration() {
             const totalTimeEl = document.getElementById('total-time');
-            if (audio.duration) {
+            if (audio.duration && !isNaN(audio.duration)) {
                 totalTimeEl.textContent = formatTime(audio.duration);
             }
         }
-        
+
         function formatTime(seconds) {
             if (!seconds || isNaN(seconds)) return '00:00';
             const min = Math.floor(seconds / 60);
             const sec = Math.floor(seconds % 60);
             return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
         }
-        
+
         function updateProgress() {
             if (!audio.duration) return;
-            
             const percent = (audio.currentTime / audio.duration) * 100;
             document.getElementById('progress-bar').style.width = `${percent}%`;
-            
             document.getElementById('current-time').textContent = formatTime(audio.currentTime);
         }
-        
+
         function seekTo(event) {
             const container = document.getElementById('progress-container');
             const rect = container.getBoundingClientRect();
             const clickX = event.clientX - rect.left;
-            const percent = clickX / rect.width;
-            
-            if (audio.duration) {
-                audio.currentTime = percent * audio.duration;
-            }
+            const percent = Math.max(0, Math.min(1, clickX / rect.width));
+            if (audio.duration) audio.currentTime = percent * audio.duration;
         }
-        
+
         function setVolume(value) {
             audio.volume = value / 100;
         }
-        
-        // Setup AudioContext + Analyser for visualizer
+
         function setupAudioContext() {
             if (audioContext) return;
-            
             try {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 analyser = audioContext.createAnalyser();
-                analyser.fftSize = 256; // 128 frequency bins
+                analyser.fftSize = 256;
                 analyser.smoothingTimeConstant = 0.75;
-                
                 source = audioContext.createMediaElementSource(audio);
                 source.connect(analyser);
                 analyser.connect(audioContext.destination);
             } catch (e) {
-                console.warn('Web Audio API not supported or blocked:', e);
+                console.warn('Web Audio API not supported:', e);
             }
         }
-        
+
         function startVisualizer() {
             if (!analyser || !canvas || vizRAF) return;
-            
-            // Resume context if suspended (required after user gesture)
             if (audioContext && audioContext.state === 'suspended') {
                 audioContext.resume();
             }
-            
+
             function draw() {
                 if (!isPlaying || !analyser) {
                     stopVisualizer();
                     return;
                 }
-                
                 const bufferLength = analyser.frequencyBinCount;
                 const dataArray = new Uint8Array(bufferLength);
                 analyser.getByteFrequencyData(dataArray);
-                
+
                 ctx.fillStyle = '#0a0a0f';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
+
                 const numBars = 42;
                 const padding = 12;
                 const availableWidth = canvas.width - (padding * 2);
                 const barWidth = availableWidth / numBars;
                 const gap = 1.5;
-                
+
                 for (let i = 0; i < numBars; i++) {
-                    // Distribute across frequency range nicely
                     const dataIndex = Math.floor((i / numBars) * (bufferLength * 0.92));
                     let value = dataArray[dataIndex] || 0;
-                    
-                    // Boost mids a little for visual pop
-                    if (i > numBars * 0.25 && i < numBars * 0.75) {
-                        value = Math.min(255, value * 1.15);
-                    }
-                    
+                    if (i > numBars * 0.25 && i < numBars * 0.75) value = Math.min(255, value * 1.15);
                     const barHeight = (value / 255) * (canvas.height - 28);
-                    
                     const x = padding + (i * barWidth);
-                    
-                    // Rainbow hue sweep — starts deep blue/purple → pink → orange → yellow
                     const hue = ((i / numBars) * 320) + 220;
                     const lightness = 62 + (value / 255) * 18;
-                    
+
                     ctx.fillStyle = `hsl(${hue}, 100%, ${lightness}%)`;
-                    
-                    // Neon glow layers
                     ctx.shadowBlur = 18;
                     ctx.shadowColor = `hsla(${hue}, 100%, 70%, 0.6)`;
                     ctx.fillRect(x, canvas.height - barHeight - 12, barWidth - gap, barHeight);
-                    
-                    // Core bright bar
+
                     ctx.shadowBlur = 4;
                     ctx.fillRect(x + 0.5, canvas.height - barHeight - 11, barWidth - gap - 1, barHeight - 1);
-                    
-                    // Top highlight
+
                     ctx.fillStyle = `hsla(${hue}, 100%, 95%, 0.9)`;
                     ctx.fillRect(x + 1, canvas.height - barHeight - 11, barWidth - gap - 2, 3);
                 }
-                
-                // Subtle center reflection line
+
                 ctx.strokeStyle = 'rgba(255,255,255,0.06)';
                 ctx.lineWidth = 1;
                 ctx.beginPath();
                 ctx.moveTo(padding, canvas.height / 2 + 8);
                 ctx.lineTo(canvas.width - padding, canvas.height / 2 + 8);
                 ctx.stroke();
-                
+
                 vizRAF = requestAnimationFrame(draw);
             }
-            
             draw();
         }
-        
+
         function stopVisualizer() {
             if (vizRAF) {
                 cancelAnimationFrame(vizRAF);
                 vizRAF = null;
             }
-            
-            // Draw a nice idle state
             if (ctx && canvas) {
                 ctx.fillStyle = '#0a0a0f';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                // Subtle idle bars
-                ctx.shadowBlur = 0;
                 const numBars = 42;
                 const padding = 12;
                 const barWidth = (canvas.width - padding * 2) / numBars;
-                
                 for (let i = 0; i < numBars; i++) {
                     const x = padding + (i * barWidth);
                     const hue = ((i / numBars) * 320) + 220;
@@ -539,37 +741,31 @@
                 }
             }
         }
-        
+
         function initVisualizer() {
             canvas = document.getElementById('eq-canvas');
             ctx = canvas.getContext('2d', { alpha: true });
-            
-            // Make canvas responsive
+
             function resizeCanvas() {
                 const rect = canvas.getBoundingClientRect();
                 canvas.width = Math.floor(rect.width * 1.8);
                 canvas.height = 180;
-                
-                // Redraw idle state
-                if (ctx) {
+                if (ctx && !isPlaying) {
                     ctx.fillStyle = '#0a0a0f';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                 }
             }
-            
             window.addEventListener('resize', resizeCanvas);
-            setTimeout(resizeCanvas, 50);
-            
-            // Initial idle visualization
+            setTimeout(resizeCanvas, 80);
+
+            // Initial idle bars
             setTimeout(() => {
                 if (ctx && canvas && !isPlaying) {
                     ctx.fillStyle = '#0a0a0f';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    
                     const numBars = 42;
                     const padding = 12;
                     const barWidth = (canvas.width - padding * 2) / numBars;
-                    
                     for (let i = 0; i < numBars; i++) {
                         const x = padding + (i * barWidth);
                         const hue = ((i / numBars) * 320) + 220;
@@ -577,121 +773,151 @@
                         ctx.fillRect(x, canvas.height - 22, barWidth - 1.5, 10);
                     }
                 }
-            }, 120);
-            
-            // Click on canvas toggles play if a track is loaded
+            }, 150);
+
             canvas.addEventListener('click', () => {
                 if (currentTrackIndex >= 0) {
                     togglePlay();
                 } else {
-                    // Play first track
-                    playTrack(0);
+                    const tracks = getCurrentTracks();
+                    if (tracks.length > 0) playTrack(0);
                 }
             });
         }
-        
+
+        // =====================================================
+        // PLAYBACK + UI UPDATES
+        // =====================================================
         function updateNowPlaying(index) {
-            const track = tracks[index];
-            
+            const album = getCurrentAlbum();
+            const track = album.tracks[index];
+            if (!track) return;
+
+            // Title & subtitle
             document.getElementById('now-playing-title').innerHTML = track.title;
             document.getElementById('now-playing-subtitle').innerHTML = track.subtitle || 'AAHIGH ORIGINAL';
-            
-            document.getElementById('track-counter').innerHTML = `${track.num} / ${tracks.length}`;
-            
-            // Update active state in playlist
+
+            // Track counter
+            document.getElementById('track-counter').innerHTML = `${track.num} / ${album.tracks.length}`;
+
+            // Current album badge
+            const badge = document.getElementById('current-album-badge');
+            badge.textContent = album.name;
+            badge.classList.remove('hidden');
+
+            // Artwork
+            const artContainer = document.getElementById('now-playing-art-container');
+            const artImg = document.getElementById('now-playing-art-img');
+            const artworkSrc = track.artwork || album.artwork;
+
+            if (artworkSrc) {
+                artImg.src = artworkSrc;
+                artImg.onerror = () => {
+                    artContainer.classList.add('hidden');
+                };
+                artContainer.classList.remove('hidden');
+            } else {
+                artContainer.classList.add('hidden');
+            }
+
+            // Highlight active track in playlist
             document.querySelectorAll('.track-item').forEach((el, i) => {
-                if (i === index) {
-                    el.classList.add('active');
-                } else {
-                    el.classList.remove('active');
-                }
+                el.classList.toggle('active', i === index);
             });
         }
-        
-        function playTrack(index) {
+
+        async function playTrack(index) {
+            const album = getCurrentAlbum();
+            const tracks = album.tracks;
             if (index < 0 || index >= tracks.length) return;
-            
+
             const track = tracks[index];
             currentTrackIndex = index;
-            
-            // Setup audio context on first user interaction
+
             setupAudioContext();
-            
-            // Load new source
-            const wasPlaying = isPlaying;
+
+            // === VALIDATION ===
+            const isValid = await validateMP3File(track.file, track.title);
+            if (!isValid) {
+                // Validation already showed toast + status message
+                return;
+            }
+
+            // Load and play
             audio.src = track.file;
             audio.load();
-            
+
             updateNowPlaying(index);
-            
-            // Play
-            audio.play().then(() => {
+
+            try {
+                await audio.play();
                 isPlaying = true;
                 updatePlayButton();
-                
-                // Update duration once metadata loads
-                setTimeout(() => {
-                    const totalEl = document.getElementById('total-time');
-                    if (audio.duration && totalEl.textContent === '00:00') {
-                        totalEl.textContent = formatTime(audio.duration);
+
+                // Clear any previous error status
+                const statusEl = document.getElementById('playback-status');
+                statusEl.classList.add('hidden');
+
+                // Attach error handler for format/decode issues
+                audio.onerror = () => {
+                    const errCode = audio.error ? audio.error.code : 0;
+                    let msg = `Playback error on "${track.title}".`;
+                    if (errCode === 4) {
+                        msg = `File has content but is not a supported MP3 format or is corrupted.`;
                     }
-                }, 300);
-            }).catch(err => {
+                    console.error(msg, audio.error);
+                    showToast(msg, 'error', 7000);
+                    const statusEl = document.getElementById('playback-status');
+                    statusEl.innerHTML = `<span class="text-red-400">⚠️ ${msg}</span>`;
+                    statusEl.classList.remove('hidden');
+                };
+            } catch (err) {
                 console.error('Playback failed:', err);
-                // Fallback message
-                alert('Playback failed. Make sure the MP3 files are in the same directory as this HTML file.');
-            });
-            
+                showToast('Playback failed. Check that the MP3 file exists and is accessible.', 'error');
+            }
+
             // Update playlist highlight
             document.querySelectorAll('.track-item').forEach((el, i) => {
                 el.classList.toggle('active', i === index);
             });
         }
-        
+
         function togglePlay() {
             if (currentTrackIndex === -1) {
-                // Start with first track
-                playTrack(0);
+                const tracks = getCurrentTracks();
+                if (tracks.length > 0) playTrack(0);
                 return;
             }
-            
             if (isPlaying) {
                 audio.pause();
             } else {
-                // Resume context if needed
-                if (audioContext && audioContext.state === 'suspended') {
-                    audioContext.resume();
-                }
+                if (audioContext && audioContext.state === 'suspended') audioContext.resume();
                 audio.play().catch(console.error);
             }
         }
-        
+
         function nextTrack() {
+            const tracks = getCurrentTracks();
             if (currentTrackIndex === -1) {
                 playTrack(0);
                 return;
             }
-            
-            let nextIndex = currentTrackIndex + 1;
-            if (nextIndex >= tracks.length) {
-                nextIndex = isLooping ? 0 : currentTrackIndex;
-            }
-            playTrack(nextIndex);
+            let next = currentTrackIndex + 1;
+            if (next >= tracks.length) next = isLooping ? 0 : currentTrackIndex;
+            playTrack(next);
         }
-        
+
         function prevTrack() {
+            const tracks = getCurrentTracks();
             if (currentTrackIndex === -1) {
                 playTrack(tracks.length - 1);
                 return;
             }
-            
-            let prevIndex = currentTrackIndex - 1;
-            if (prevIndex < 0) {
-                prevIndex = isLooping ? tracks.length - 1 : currentTrackIndex;
-            }
-            playTrack(prevIndex);
+            let prev = currentTrackIndex - 1;
+            if (prev < 0) prev = isLooping ? tracks.length - 1 : currentTrackIndex;
+            playTrack(prev);
         }
-        
+
         function handleTrackEnd() {
             if (isLooping) {
                 audio.currentTime = 0;
@@ -700,11 +926,10 @@
                 nextTrack();
             }
         }
-        
+
         function toggleLoop() {
             isLooping = !isLooping;
             const btn = document.getElementById('loop-btn');
-            
             if (isLooping) {
                 btn.classList.add('!border-[#ff2e63]', '!text-[#ff2e63]');
                 btn.classList.remove('border-zinc-700', 'text-zinc-400');
@@ -712,65 +937,196 @@
                 btn.classList.remove('!border-[#ff2e63]', '!text-[#ff2e63]');
                 btn.classList.add('border-zinc-700', 'text-zinc-400');
             }
-            
-            audio.loop = isLooping; // native loop as backup
+            audio.loop = isLooping;
         }
-        
+
+        // =====================================================
+        // PLAYLIST + ALBUMS RENDERING
+        // =====================================================
         function createPlaylist() {
             const container = document.getElementById('playlist');
             container.innerHTML = '';
-            
+
+            const album = getCurrentAlbum();
+            const tracks = getCurrentTracks();
+
+            // Update subtitle
+            document.getElementById('playlist-subtitle').innerHTML = 
+                `${album.name.toUpperCase()} — ${tracks.length} TRACKS`;
+
             tracks.forEach((track, index) => {
                 const div = document.createElement('div');
                 div.className = `track-item flex items-center gap-x-4 px-6 py-[17px] cursor-pointer border-l-2 border-transparent`;
-                
+
+                const hasExtraInfo = track.description || track.credits || track.notes || (track.derivativeLinks && track.derivativeLinks.length > 0);
+                const artworkSrc = track.artwork || album.artwork;
+
                 div.innerHTML = `
                     <div class="track-number text-xl font-semibold text-zinc-400 w-6 tabular-nums">${track.num}</div>
                     
+                    ${artworkSrc ? `
+                    <div class="w-9 h-9 flex-shrink-0 rounded-xl overflow-hidden border border-zinc-700">
+                        <img src="${artworkSrc}" class="w-full h-full object-cover" 
+                             onerror="this.parentElement.style.display='none'" alt="">
+                    </div>` : ''}
+
                     <div class="flex-1 min-w-0">
                         <div class="font-semibold tracking-tight text-lg leading-none">${track.title}</div>
-                        <div class="text-xs text-zinc-500 mt-1">${track.subtitle}</div>
+                        <div class="text-xs text-zinc-500 mt-1">${track.subtitle || ''}</div>
                     </div>
                     
-                    <div class="flex items-center">
+                    <div class="flex items-center gap-x-2">
+                        ${hasExtraInfo ? `
+                        <button class="info-btn w-8 h-8 flex items-center justify-center text-[#00f3ff] hover:bg-zinc-800 rounded-xl transition-colors" title="Show track details">
+                            <i class="fa-solid fa-info-circle"></i>
+                        </button>` : ''}
+                        
                         <button class="play-mini w-9 h-9 flex items-center justify-center text-[#ff2e63] hover:bg-zinc-800 rounded-xl transition-colors">
                             <i class="fa-solid fa-play text-lg ml-0.5"></i>
                         </button>
                     </div>
                 `;
-                
-                // Click whole row to play
+
+                // Row click → play
                 div.addEventListener('click', (e) => {
-                    if (!e.target.closest('.play-mini')) {
+                    if (!e.target.closest('.play-mini') && !e.target.closest('.info-btn')) {
                         playTrack(index);
                     }
                 });
-                
+
                 // Mini play button
                 const miniBtn = div.querySelector('.play-mini');
-                miniBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (currentTrackIndex === index && isPlaying) {
-                        audio.pause();
-                    } else {
-                        playTrack(index);
-                    }
-                });
-                
+                if (miniBtn) {
+                    miniBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (currentTrackIndex === index && isPlaying) {
+                            audio.pause();
+                        } else {
+                            playTrack(index);
+                        }
+                    });
+                }
+
+                // Info button → show metadata
+                const infoBtn = div.querySelector('.info-btn');
+                if (infoBtn) {
+                    infoBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        showTrackInfoModal(track, album);
+                    });
+                }
+
                 container.appendChild(div);
             });
         }
-        
+
+        function createAlbumsBar() {
+            const container = document.getElementById('albums-bar');
+            container.innerHTML = '';
+
+            albums.forEach(album => {
+                const btn = document.createElement('button');
+                btn.className = `album-btn flex items-center gap-3 px-5 py-2.5 rounded-2xl border border-zinc-700 bg-zinc-900 hover:border-zinc-500 text-sm font-medium snap-start`;
+                
+                const isActive = album.id === currentAlbumId;
+                if (isActive) {
+                    btn.classList.add('active', '!border-[#ff2e63]', '!bg-[#ff2e63]', '!text-white');
+                }
+
+                btn.innerHTML = `
+                    ${album.artwork ? `
+                    <div class="w-7 h-7 rounded-xl overflow-hidden border border-zinc-600 flex-shrink-0">
+                        <img src="${album.artwork}" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                    </div>` : ''}
+                    <span>${album.name}</span>
+                    <span class="text-[10px] opacity-60 font-mono">(${album.tracks.length})</span>
+                `;
+
+                btn.onclick = () => {
+                    if (album.id === currentAlbumId) return;
+                    
+                    // Pause current playback when switching albums
+                    if (isPlaying) {
+                        audio.pause();
+                        currentTrackIndex = -1;
+                        document.getElementById('now-playing-title').innerHTML = 'SELECT A TRACK';
+                        document.getElementById('now-playing-subtitle').innerHTML = 'AAHIGH ORIGINAL';
+                        document.getElementById('playback-status').classList.add('hidden');
+                        document.getElementById('now-playing-art-container').classList.add('hidden');
+                    }
+                    
+                    currentAlbumId = album.id;
+                    createAlbumsBar();
+                    createPlaylist();
+                };
+
+                container.appendChild(btn);
+            });
+        }
+
+        function showTrackInfoModal(track, album) {
+            // Simple but effective modal using Tailwind
+            const existing = document.getElementById('track-info-modal');
+            if (existing) existing.remove();
+
+            const modal = document.createElement('div');
+            modal.id = 'track-info-modal';
+            modal.className = 'fixed inset-0 bg-black/70 flex items-center justify-center z-[200] p-6';
+            
+            let html = `
+                <div class="bg-zinc-900 border border-zinc-700 rounded-3xl max-w-lg w-full p-8 relative" onclick="event.target === this && document.getElementById('track-info-modal').remove()">
+                    <button onclick="document.getElementById('track-info-modal').remove()" 
+                            class="absolute top-4 right-4 text-zinc-500 hover:text-white text-2xl leading-none">×</button>
+                    
+                    <div class="flex gap-5 items-start mb-6">
+                        ${track.artwork || album.artwork ? `
+                        <div class="w-20 h-20 rounded-2xl overflow-hidden border border-zinc-700 flex-shrink-0">
+                            <img src="${track.artwork || album.artwork}" class="w-full h-full object-cover">
+                        </div>` : ''}
+                        
+                        <div>
+                            <div class="text-3xl font-semibold tracking-tighter">${track.title}</div>
+                            <div class="text-zinc-400">${track.subtitle || ''}</div>
+                            <div class="text-xs text-zinc-500 mt-1">${album.name}</div>
+                        </div>
+                    </div>
+            `;
+
+            if (track.description) {
+                html += `<div class="mb-5"><div class="text-xs uppercase tracking-widest text-zinc-500 mb-1">Description</div><p class="text-sm leading-relaxed">${track.description}</p></div>`;
+            }
+            if (track.credits) {
+                html += `<div class="mb-4"><div class="text-xs uppercase tracking-widest text-zinc-500 mb-1">Credits</div><p class="text-sm">${track.credits}</p></div>`;
+            }
+            if (track.notes) {
+                html += `<div class="mb-4"><div class="text-xs uppercase tracking-widest text-zinc-500 mb-1">Notes</div><p class="text-sm">${track.notes}</p></div>`;
+            }
+            if (track.derivativeLinks && track.derivativeLinks.length > 0) {
+                html += `<div><div class="text-xs uppercase tracking-widest text-zinc-500 mb-2">Derivative Works</div>`;
+                track.derivativeLinks.forEach(link => {
+                    const url = typeof link === 'string' ? link : link.url;
+                    const label = typeof link === 'string' ? url : link.label;
+                    html += `<a href="${url}" target="_blank" class="block text-sm text-[#00f3ff] hover:underline mb-1">${label}</a>`;
+                });
+                html += `</div>`;
+            }
+
+            html += `</div>`;
+            modal.innerHTML = html;
+            document.body.appendChild(modal);
+        }
+
+        // =====================================================
+        // INITIALIZATION
+        // =====================================================
         function initProgressBar() {
             const container = document.getElementById('progress-container');
             container.addEventListener('click', seekTo);
-            
-            // Also allow drag
+
             let isDragging = false;
-            
             container.addEventListener('mousedown', () => { isDragging = true; });
             window.addEventListener('mouseup', () => { isDragging = false; });
-            
+
             container.addEventListener('mousemove', (e) => {
                 if (isDragging && audio.duration) {
                     const rect = container.getBoundingClientRect();
@@ -779,12 +1135,11 @@
                 }
             });
         }
-        
+
         function initKeyboardControls() {
             document.addEventListener('keydown', (e) => {
                 if (e.target.tagName === 'INPUT') return;
-                
-                switch(e.key.toLowerCase()) {
+                switch (e.key.toLowerCase()) {
                     case ' ':
                     case 'k':
                         e.preventDefault();
@@ -802,62 +1157,56 @@
                         toggleLoop();
                         break;
                     case 'm':
-                        // mute toggle
                         audio.muted = !audio.muted;
                         break;
                 }
             });
-            
-            // Helpful tip in console
-            console.log('%c[AAHIGH MP3] Keyboard: Space/K = play/pause • ←/→ or P/N = prev/next • L = loop', 'color:#555');
+            console.log('%c[AAHIGH MP3] Keyboard shortcuts ready: Space/K = play/pause • ←/→ or P/N = prev/next • L = loop', 'color:#555');
         }
-        
+
         function initVolume() {
             const slider = document.getElementById('volume-slider');
             slider.value = 85;
             audio.volume = 0.85;
-            
-            // Sync on change
             slider.addEventListener('input', () => {
                 audio.volume = slider.value / 100;
             });
         }
-        
-        // Main initialization
-        function init() {
+
+        async function init() {
             initTailwind();
             initAudio();
             initVisualizer();
-            createPlaylist();
             initProgressBar();
             initVolume();
             initKeyboardControls();
-            
-            // Set initial idle visualizer state
-            setTimeout(() => {
-                const canvasEl = document.getElementById('eq-canvas');
-                if (canvasEl && canvasEl.getContext) {
-                    // Already handled in initVisualizer
-                }
-            }, 200);
-            
-            // Easter egg: click header to play first track
+
+            // Load rich metadata + albums from JSON (or fallback)
+            await loadDescriptionJson();
+
+            // Render albums bar and initial playlist
+            createAlbumsBar();
+            createPlaylist();
+
+            // Easter egg: header click plays first track of current album
             const header = document.querySelector('header');
             if (header) {
                 header.style.cursor = 'pointer';
                 header.addEventListener('click', () => {
                     if (currentTrackIndex === -1) {
-                        playTrack(0);
+                        const tracks = getCurrentTracks();
+                        if (tracks.length > 0) playTrack(0);
                     }
                 });
             }
-            
-            // Preload first track metadata (optional)
-            // audio.src = tracks[0].file; // commented to avoid autoplay issues
-            
-            console.log('%c[AAHIGH] MP3 Player ready — rainbow EQ visualizer initialized', 'color:#ff2e63');
+
+            console.log('%c[AAHIGH] Enhanced MP3 Player ready — JSON metadata + validation + multi-album support active', 'color:#ff2e63');
         }
-        
+
+        function initTailwind() {
+            // Placeholder for future Tailwind script config if needed
+        }
+
         // Boot
         window.onload = init;
     </script>
