@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="HIGH TOWER DISTRICT • MP3">
+    <meta property="og:description" content="MP3 PLAYER">
+    <meta property="og:image" content="https://mp3.ahightower.com/album_art.jpg">
+    <meta property="og:url" content="https://mp3.ahightower.com/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MP3 PLAYER">
+    <meta name="twitter:description" content="...">
+    <meta name="twitter:image" content="https://mp3.ahightower.com/album_art.jpg">
+
+    <title>AAHIGH • mp3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        :root {
+            --neon-pink: #ff2e63;
+            --neon-cyan: #00f3ff;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .display-font {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        .neon-text {
+            text-shadow: 
+                0 0 10px rgb(255 46 99 / 0.5),
+                0 0 20px rgb(255 46 99 / 0.3);
+        }
+
+        .section-header {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            font-weight: 500;
+        }
+
+        .track-item {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .track-item:hover {
+            background-color: #18181b;
+            transform: translateX(4px);
+        }
+        
+        .track-item.active {
+            background-color: #27251f;
+            border-left: 3px solid #ff2e63;
+        }
+
+        .player-container {
+            background: linear-gradient(145deg, #111113 0%, #0a0a0f 100%);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+
+        .eq-canvas {
+            border-radius: 16px;
+            background: #0a0a0f;
+            box-shadow: 
+                0 0 0 1px #27251f,
+                inset 0 0 60px rgb(0 0 0 / 0.6);
+            image-rendering: crisp-edges;
+        }
+
+        .progress-container {
+            height: 6px;
+            background: #27251f;
+            border-radius: 9999px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #ff2e63, #00f3ff);
+            transition: width 0.1s linear;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            right: -1px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 9999px;
+            box-shadow: 0 0 0 3px #ff2e63;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .progress-container:hover .progress-bar::after {
+            opacity: 1;
+        }
+
+        .control-btn {
+            transition: all 0.1s ease;
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.1);
+            color: #ff2e63;
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .playlist-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #27251f #18181b;
+        }
+
+        .neon-glow {
+            box-shadow: 
+                0 0 15px rgb(255 46 99 / 0.3),
+                0 0 30px rgb(255 46 99 / 0.1);
+        }
+
+        .eq-label {
+            font-size: 9px;
+            letter-spacing: 2px;
+            opacity: 0.6;
+        }
+
+        .track-number {
+            font-variant-numeric: tabular-nums;
+            min-width: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-[#0a0a0f] text-white min-h-screen">
+    <!-- Header -->
+    <header class="border-b border-zinc-800 bg-[#0a0a0f]/95 backdrop-blur-lg sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-4">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#ff2e63] via-[#ff2e63] to-[#c0264d] flex items-center justify-center shadow-lg shadow-[#ff2e63]/30">
+                    <i class="fa-solid fa-tower-broadcast text-white text-2xl"></i>
+                </div>
+                <div>
+                    <div class="display-font text-3xl font-semibold tracking-tighter">AAHIGH</div>
+                    <div class="text-[10px] text-zinc-500 -mt-1 tracking-[3px]">HIGH TOWER DISTRICT • FRESNO</div>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-x-2 text-xs">
+                <div class="px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 flex items-center gap-x-2">
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span class="text-emerald-400 font-medium">ONLINE</span>
+                </div>
+                <div class="text-zinc-500 text-xs px-2">6 TRACKS</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-5xl mx-auto px-6 pt-8 pb-12">
+        
+        <!-- Now Playing + Visualizer -->
+        <div class="player-container rounded-3xl p-8 mb-8 border border-zinc-800">
+            <div class="flex flex-col lg:flex-row gap-8">
+                
+                <!-- Now Playing Info -->
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-x-3 mb-4">
+                        <div class="section-header text-[#ff2e63] tracking-[3px]">NOW PLAYING</div>
+                        <div class="flex-1 h-px bg-gradient-to-r from-[#ff2e63]/40 to-transparent"></div>
+                    </div>
+                    
+                    <div id="now-playing-title" 
+                         class="display-font text-5xl lg:text-6xl font-semibold tracking-tighter leading-none mb-2 text-white min-h-[64px]">
+                        SELECT A TRACK
+                    </div>
+                    
+                    <div id="now-playing-subtitle" 
+                         class="text-zinc-400 text-lg font-light tracking-tight">
+                        AAHIGH ORIGINAL
+                    </div>
+                    
+                    <div class="mt-6 flex items-center gap-x-4 text-xs">
+                        <div class="flex items-center gap-x-1.5 text-zinc-400">
+                            <i class="fa-solid fa-headset"></i>
+                            <span id="track-counter">— / 6</span>
+                        </div>
+                        <div class="px-2.5 py-1 rounded-full bg-zinc-900 text-[10px] font-mono border border-zinc-800" id="track-duration">
+                            --:--
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graphical EQ Visualizer -->
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-3 px-1">
+                        <div>
+                            <div class="section-header text-[#00f3ff]">GRAPHICAL EQ</div>
+                            <div class="text-[10px] text-zinc-500">RAINBOW SPECTRUM • REAL-TIME</div>
+                        </div>
+                        <div class="text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-400 font-mono">FFT 256</div>
+                    </div>
+                    
+                    <canvas id="eq-canvas" width="520" height="180" 
+                            class="eq-canvas w-full cursor-pointer"></canvas>
+                    
+                    <div class="flex justify-between px-1 mt-1.5">
+                        <div class="eq-label text-left">20Hz</div>
+                        <div class="eq-label text-center">1kHz</div>
+                        <div class="eq-label text-right">20kHz</div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Player Controls -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 mb-8">
+            <div class="flex flex-col gap-y-5">
+                
+                <!-- Progress -->
+                <div class="px-1">
+                    <div class="flex items-center justify-between text-[10px] font-mono text-zinc-400 mb-1.5 px-0.5">
+                        <div id="current-time">00:00</div>
+                        <div id="total-time">00:00</div>
+                    </div>
+                    <div id="progress-container" 
+                         class="progress-container w-full relative group">
+                        <div id="progress-bar" 
+                             class="progress-bar w-0 rounded-full"
+                             style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Main Controls -->
+                <div class="flex items-center justify-between px-2">
+                    
+                    <div class="flex items-center gap-x-2">
+                        <!-- Previous -->
+                        <button onclick="prevTrack()" 
+                                class="control-btn w-11 h-11 flex items-center justify-center text-2xl text-zinc-400 hover:text-white">
+                            <i class="fa-solid fa-step-backward"></i>
+                        </button>
+                        
+                        <!-- Play / Pause -->
+                        <button id="play-btn"
+                                onclick="togglePlay()"
+                                class="control-btn w-16 h-16 flex items-center justify-center text-4xl bg-white text-black rounded-2xl shadow-xl hover:bg-[#ff2e63] hover:text-white active:scale-95 transition-all">
+                            <i id="play-icon" class="fa-solid fa-play ml-0.5"></i>
+                        </button>
+                        
+                        <!-- Next -->
+                        <button onclick="nextTrack()" 
+                                class="control-btn w-11 h-11 flex items-center justify-center text-2xl text-zinc-400 hover:text-white">
+                            <i class="fa-solid fa-step-forward"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-x-6">
+                        
+                        <!-- Loop -->
+                        <button id="loop-btn" onclick="toggleLoop()"
+                                class="control-btn flex items-center gap-x-1.5 px-4 py-2 text-xs rounded-2xl border border-zinc-700 hover:border-zinc-400 text-zinc-400 hover:text-white">
+                            <i class="fa-solid fa-redo"></i>
+                            <span class="font-medium">LOOP</span>
+                        </button>
+                        
+                        <!-- Volume -->
+                        <div class="flex items-center gap-x-3 w-40">
+                            <i class="fa-solid fa-volume-low text-zinc-400"></i>
+                            <input type="range" id="volume-slider" 
+                                   class="w-full accent-[#ff2e63] cursor-pointer"
+                                   min="0" max="100" step="1" value="85"
+                                   oninput="setVolume(this.value)">
+                            <i class="fa-solid fa-volume-high text-zinc-400"></i>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Playlist -->
+        <div>
+            <div class="flex items-center justify-between mb-4 px-1">
+                <div>
+                    <div class="section-header text-zinc-400">PLAYLIST</div>
+                    <div class="text-xs text-zinc-500">ORIGINAL MUSIC FROM AAHIGH</div>
+                </div>
+                <div class="text-[10px] text-zinc-500 font-mono">TAP TO PLAY</div>
+            </div>
+            
+            <div id="playlist" 
+                 class="playlist-scroll bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden divide-y divide-zinc-800 max-h-[380px] overflow-y-auto">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-800 py-6">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <div class="text-[10px] text-zinc-500 tracking-widest">
+                HIGH TOWER DISTRICT • FRESNO, CALIFORNIA • 2026
+            </div>
+            <div class="text-[9px] text-zinc-600 mt-1">
+                SKILL-BASED • VERIFIABLE • HUMAN CRAFT
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tailwind script
+        function initTailwind() {
+            document.documentElement.style.setProperty('--accent', '#ff2e63');
+        }
+        
+        // Track data
+        const tracks = [
+            { num: 1, file: "high.mp3", title: "HIGH", subtitle: "AAHIGH ORIGINAL" },
+            { num: 2, file: "most-insane.mp3", title: "MOST INSANE", subtitle: "AAHIGH ORIGINAL" },
+            { num: 3, file: "farmaculture.mp3", title: "FARMACULTURE", subtitle: "AAHIGH ORIGINAL" },
+            { num: 4, file: "shoes-on-dah-line.mp3", title: "SHOES ON DAH LINE", subtitle: "AAHIGH ORIGINAL" },
+            { num: 5, file: "dah-sing-you-larry-t.mp3", title: "DAH SING YOU LARRY T", subtitle: "AAHIGH ORIGINAL" },
+            { num: 6, file: "san-clemente-tower-trio.mp3", title: "SAN CLEMENTE TOWER TRIO", subtitle: "AAHIGH ORIGINAL" }
+        ];
+        
+        let currentTrackIndex = -1;
+        let isPlaying = false;
+        let isLooping = false;
+        let audio = new Audio();
+        let audioContext = null;
+        let analyser = null;
+        let source = null;
+        let vizRAF = null;
+        let canvas, ctx;
+        
+        // Initialize audio element
+        function initAudio() {
+            audio.addEventListener('timeupdate', updateProgress);
+            audio.addEventListener('ended', handleTrackEnd);
+            audio.addEventListener('loadedmetadata', updateDuration);
+            audio.addEventListener('play', () => {
+                isPlaying = true;
+                updatePlayButton();
+                startVisualizer();
+            });
+            audio.addEventListener('pause', () => {
+                isPlaying = false;
+                updatePlayButton();
+                stopVisualizer();
+            });
+            
+            // Set initial volume
+            audio.volume = 0.85;
+        }
+        
+        function updatePlayButton() {
+            const icon = document.getElementById('play-icon');
+            if (isPlaying) {
+                icon.classList.remove('fa-play');
+                icon.classList.add('fa-pause');
+            } else {
+                icon.classList.remove('fa-pause');
+                icon.classList.add('fa-play');
+            }
+        }
+        
+        function updateDuration() {
+            const totalTimeEl = document.getElementById('total-time');
+            if (audio.duration) {
+                totalTimeEl.textContent = formatTime(audio.duration);
+            }
+        }
+        
+        function formatTime(seconds) {
+            if (!seconds || isNaN(seconds)) return '00:00';
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }
+        
+        function updateProgress() {
+            if (!audio.duration) return;
+            
+            const percent = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            
+            document.getElementById('current-time').textContent = formatTime(audio.currentTime);
+        }
+        
+        function seekTo(event) {
+            const container = document.getElementById('progress-container');
+            const rect = container.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const percent = clickX / rect.width;
+            
+            if (audio.duration) {
+                audio.currentTime = percent * audio.duration;
+            }
+        }
+        
+        function setVolume(value) {
+            audio.volume = value / 100;
+        }
+        
+        // Setup AudioContext + Analyser for visualizer
+        function setupAudioContext() {
+            if (audioContext) return;
+            
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256; // 128 frequency bins
+                analyser.smoothingTimeConstant = 0.75;
+                
+                source = audioContext.createMediaElementSource(audio);
+                source.connect(analyser);
+                analyser.connect(audioContext.destination);
+            } catch (e) {
+                console.warn('Web Audio API not supported or blocked:', e);
+            }
+        }
+        
+        function startVisualizer() {
+            if (!analyser || !canvas || vizRAF) return;
+            
+            // Resume context if suspended (required after user gesture)
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            
+            function draw() {
+                if (!isPlaying || !analyser) {
+                    stopVisualizer();
+                    return;
+                }
+                
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                analyser.getByteFrequencyData(dataArray);
+                
+                ctx.fillStyle = '#0a0a0f';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                const numBars = 42;
+                const padding = 12;
+                const availableWidth = canvas.width - (padding * 2);
+                const barWidth = availableWidth / numBars;
+                const gap = 1.5;
+                
+                for (let i = 0; i < numBars; i++) {
+                    // Distribute across frequency range nicely
+                    const dataIndex = Math.floor((i / numBars) * (bufferLength * 0.92));
+                    let value = dataArray[dataIndex] || 0;
+                    
+                    // Boost mids a little for visual pop
+                    if (i > numBars * 0.25 && i < numBars * 0.75) {
+                        value = Math.min(255, value * 1.15);
+                    }
+                    
+                    const barHeight = (value / 255) * (canvas.height - 28);
+                    
+                    const x = padding + (i * barWidth);
+                    
+                    // Rainbow hue sweep — starts deep blue/purple → pink → orange → yellow
+                    const hue = ((i / numBars) * 320) + 220;
+                    const lightness = 62 + (value / 255) * 18;
+                    
+                    ctx.fillStyle = `hsl(${hue}, 100%, ${lightness}%)`;
+                    
+                    // Neon glow layers
+                    ctx.shadowBlur = 18;
+                    ctx.shadowColor = `hsla(${hue}, 100%, 70%, 0.6)`;
+                    ctx.fillRect(x, canvas.height - barHeight - 12, barWidth - gap, barHeight);
+                    
+                    // Core bright bar
+                    ctx.shadowBlur = 4;
+                    ctx.fillRect(x + 0.5, canvas.height - barHeight - 11, barWidth - gap - 1, barHeight - 1);
+                    
+                    // Top highlight
+                    ctx.fillStyle = `hsla(${hue}, 100%, 95%, 0.9)`;
+                    ctx.fillRect(x + 1, canvas.height - barHeight - 11, barWidth - gap - 2, 3);
+                }
+                
+                // Subtle center reflection line
+                ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(padding, canvas.height / 2 + 8);
+                ctx.lineTo(canvas.width - padding, canvas.height / 2 + 8);
+                ctx.stroke();
+                
+                vizRAF = requestAnimationFrame(draw);
+            }
+            
+            draw();
+        }
+        
+        function stopVisualizer() {
+            if (vizRAF) {
+                cancelAnimationFrame(vizRAF);
+                vizRAF = null;
+            }
+            
+            // Draw a nice idle state
+            if (ctx && canvas) {
+                ctx.fillStyle = '#0a0a0f';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Subtle idle bars
+                ctx.shadowBlur = 0;
+                const numBars = 42;
+                const padding = 12;
+                const barWidth = (canvas.width - padding * 2) / numBars;
+                
+                for (let i = 0; i < numBars; i++) {
+                    const x = padding + (i * barWidth);
+                    const hue = ((i / numBars) * 320) + 220;
+                    ctx.fillStyle = `hsla(${hue}, 70%, 18%, 0.6)`;
+                    ctx.fillRect(x, canvas.height - 22, barWidth - 1.5, 10);
+                }
+            }
+        }
+        
+        function initVisualizer() {
+            canvas = document.getElementById('eq-canvas');
+            ctx = canvas.getContext('2d', { alpha: true });
+            
+            // Make canvas responsive
+            function resizeCanvas() {
+                const rect = canvas.getBoundingClientRect();
+                canvas.width = Math.floor(rect.width * 1.8);
+                canvas.height = 180;
+                
+                // Redraw idle state
+                if (ctx) {
+                    ctx.fillStyle = '#0a0a0f';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+            setTimeout(resizeCanvas, 50);
+            
+            // Initial idle visualization
+            setTimeout(() => {
+                if (ctx && canvas && !isPlaying) {
+                    ctx.fillStyle = '#0a0a0f';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    const numBars = 42;
+                    const padding = 12;
+                    const barWidth = (canvas.width - padding * 2) / numBars;
+                    
+                    for (let i = 0; i < numBars; i++) {
+                        const x = padding + (i * barWidth);
+                        const hue = ((i / numBars) * 320) + 220;
+                        ctx.fillStyle = `hsla(${hue}, 70%, 16%, 0.65)`;
+                        ctx.fillRect(x, canvas.height - 22, barWidth - 1.5, 10);
+                    }
+                }
+            }, 120);
+            
+            // Click on canvas toggles play if a track is loaded
+            canvas.addEventListener('click', () => {
+                if (currentTrackIndex >= 0) {
+                    togglePlay();
+                } else {
+                    // Play first track
+                    playTrack(0);
+                }
+            });
+        }
+        
+        function updateNowPlaying(index) {
+            const track = tracks[index];
+            
+            document.getElementById('now-playing-title').innerHTML = track.title;
+            document.getElementById('now-playing-subtitle').innerHTML = track.subtitle || 'AAHIGH ORIGINAL';
+            
+            document.getElementById('track-counter').innerHTML = `${track.num} / ${tracks.length}`;
+            
+            // Update active state in playlist
+            document.querySelectorAll('.track-item').forEach((el, i) => {
+                if (i === index) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+        }
+        
+        function playTrack(index) {
+            if (index < 0 || index >= tracks.length) return;
+            
+            const track = tracks[index];
+            currentTrackIndex = index;
+            
+            // Setup audio context on first user interaction
+            setupAudioContext();
+            
+            // Load new source
+            const wasPlaying = isPlaying;
+            audio.src = track.file;
+            audio.load();
+            
+            updateNowPlaying(index);
+            
+            // Play
+            audio.play().then(() => {
+                isPlaying = true;
+                updatePlayButton();
+                
+                // Update duration once metadata loads
+                setTimeout(() => {
+                    const totalEl = document.getElementById('total-time');
+                    if (audio.duration && totalEl.textContent === '00:00') {
+                        totalEl.textContent = formatTime(audio.duration);
+                    }
+                }, 300);
+            }).catch(err => {
+                console.error('Playback failed:', err);
+                // Fallback message
+                alert('Playback failed. Make sure the MP3 files are in the same directory as this HTML file.');
+            });
+            
+            // Update playlist highlight
+            document.querySelectorAll('.track-item').forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+        }
+        
+        function togglePlay() {
+            if (currentTrackIndex === -1) {
+                // Start with first track
+                playTrack(0);
+                return;
+            }
+            
+            if (isPlaying) {
+                audio.pause();
+            } else {
+                // Resume context if needed
+                if (audioContext && audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
+                audio.play().catch(console.error);
+            }
+        }
+        
+        function nextTrack() {
+            if (currentTrackIndex === -1) {
+                playTrack(0);
+                return;
+            }
+            
+            let nextIndex = currentTrackIndex + 1;
+            if (nextIndex >= tracks.length) {
+                nextIndex = isLooping ? 0 : currentTrackIndex;
+            }
+            playTrack(nextIndex);
+        }
+        
+        function prevTrack() {
+            if (currentTrackIndex === -1) {
+                playTrack(tracks.length - 1);
+                return;
+            }
+            
+            let prevIndex = currentTrackIndex - 1;
+            if (prevIndex < 0) {
+                prevIndex = isLooping ? tracks.length - 1 : currentTrackIndex;
+            }
+            playTrack(prevIndex);
+        }
+        
+        function handleTrackEnd() {
+            if (isLooping) {
+                audio.currentTime = 0;
+                audio.play();
+            } else {
+                nextTrack();
+            }
+        }
+        
+        function toggleLoop() {
+            isLooping = !isLooping;
+            const btn = document.getElementById('loop-btn');
+            
+            if (isLooping) {
+                btn.classList.add('!border-[#ff2e63]', '!text-[#ff2e63]');
+                btn.classList.remove('border-zinc-700', 'text-zinc-400');
+            } else {
+                btn.classList.remove('!border-[#ff2e63]', '!text-[#ff2e63]');
+                btn.classList.add('border-zinc-700', 'text-zinc-400');
+            }
+            
+            audio.loop = isLooping; // native loop as backup
+        }
+        
+        function createPlaylist() {
+            const container = document.getElementById('playlist');
+            container.innerHTML = '';
+            
+            tracks.forEach((track, index) => {
+                const div = document.createElement('div');
+                div.className = `track-item flex items-center gap-x-4 px-6 py-[17px] cursor-pointer border-l-2 border-transparent`;
+                
+                div.innerHTML = `
+                    <div class="track-number text-xl font-semibold text-zinc-400 w-6 tabular-nums">${track.num}</div>
+                    
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold tracking-tight text-lg leading-none">${track.title}</div>
+                        <div class="text-xs text-zinc-500 mt-1">${track.subtitle}</div>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <button class="play-mini w-9 h-9 flex items-center justify-center text-[#ff2e63] hover:bg-zinc-800 rounded-xl transition-colors">
+                            <i class="fa-solid fa-play text-lg ml-0.5"></i>
+                        </button>
+                    </div>
+                `;
+                
+                // Click whole row to play
+                div.addEventListener('click', (e) => {
+                    if (!e.target.closest('.play-mini')) {
+                        playTrack(index);
+                    }
+                });
+                
+                // Mini play button
+                const miniBtn = div.querySelector('.play-mini');
+                miniBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (currentTrackIndex === index && isPlaying) {
+                        audio.pause();
+                    } else {
+                        playTrack(index);
+                    }
+                });
+                
+                container.appendChild(div);
+            });
+        }
+        
+        function initProgressBar() {
+            const container = document.getElementById('progress-container');
+            container.addEventListener('click', seekTo);
+            
+            // Also allow drag
+            let isDragging = false;
+            
+            container.addEventListener('mousedown', () => { isDragging = true; });
+            window.addEventListener('mouseup', () => { isDragging = false; });
+            
+            container.addEventListener('mousemove', (e) => {
+                if (isDragging && audio.duration) {
+                    const rect = container.getBoundingClientRect();
+                    const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                    audio.currentTime = percent * audio.duration;
+                }
+            });
+        }
+        
+        function initKeyboardControls() {
+            document.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT') return;
+                
+                switch(e.key.toLowerCase()) {
+                    case ' ':
+                    case 'k':
+                        e.preventDefault();
+                        togglePlay();
+                        break;
+                    case 'arrowright':
+                    case 'n':
+                        nextTrack();
+                        break;
+                    case 'arrowleft':
+                    case 'p':
+                        prevTrack();
+                        break;
+                    case 'l':
+                        toggleLoop();
+                        break;
+                    case 'm':
+                        // mute toggle
+                        audio.muted = !audio.muted;
+                        break;
+                }
+            });
+            
+            // Helpful tip in console
+            console.log('%c[AAHIGH MP3] Keyboard: Space/K = play/pause • ←/→ or P/N = prev/next • L = loop', 'color:#555');
+        }
+        
+        function initVolume() {
+            const slider = document.getElementById('volume-slider');
+            slider.value = 85;
+            audio.volume = 0.85;
+            
+            // Sync on change
+            slider.addEventListener('input', () => {
+                audio.volume = slider.value / 100;
+            });
+        }
+        
+        // Main initialization
+        function init() {
+            initTailwind();
+            initAudio();
+            initVisualizer();
+            createPlaylist();
+            initProgressBar();
+            initVolume();
+            initKeyboardControls();
+            
+            // Set initial idle visualizer state
+            setTimeout(() => {
+                const canvasEl = document.getElementById('eq-canvas');
+                if (canvasEl && canvasEl.getContext) {
+                    // Already handled in initVisualizer
+                }
+            }, 200);
+            
+            // Easter egg: click header to play first track
+            const header = document.querySelector('header');
+            if (header) {
+                header.style.cursor = 'pointer';
+                header.addEventListener('click', () => {
+                    if (currentTrackIndex === -1) {
+                        playTrack(0);
+                    }
+                });
+            }
+            
+            // Preload first track metadata (optional)
+            // audio.src = tracks[0].file; // commented to avoid autoplay issues
+            
+            console.log('%c[AAHIGH] MP3 Player ready — rainbow EQ visualizer initialized', 'color:#ff2e63');
+        }
+        
+        // Boot
+        window.onload = init;
+    </script>
+</body>
+</html>
