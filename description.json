@@ -5,7 +5,7 @@
     {
       "id": "root",
       "name": "HIGH TOWER DISTRICT",
-      "artwork": null,
+      "artwork": "album_art.png",
       "tracks": [
         {
           "file": "cellchorus.mp3",
@@ -48,6 +48,16 @@
           "artwork": null
         },
         {
+          "file": "eyes-gonna-make-sum-lee-ricks.mp3",
+          "title": "EYES GONNA MAKE SUM LEE RICKS",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
           "file": "farmaculture.mp3",
           "title": "FARMACULTURE",
           "subtitle": "AAHIGH ORIGINAL",
@@ -68,8 +78,38 @@
           "artwork": null
         },
         {
+          "file": "miguel.mp3",
+          "title": "MIGUEL",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
           "file": "most-insane.mp3",
           "title": "MOST INSANE",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "nervous-looking-white-hoes.mp3",
+          "title": "NERVOUS LOOKING WHITE HOES",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "reduction-to-absurdity.mp3",
+          "title": "REDUCTION TO ABSURDITY",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "",
           "credits": "Aaron Hightower",
@@ -91,6 +131,120 @@
           "file": "shoes-on-dah-line.mp3",
           "title": "SHOES ON DAH LINE",
           "subtitle": "AAHIGH ORIGINAL",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        }
+      ]
+    },
+    {
+      "id": "johnny",
+      "name": "JOHNNY",
+      "artwork": null,
+      "tracks": [
+        {
+          "file": "johnny/bay-area-slaps.mp3",
+          "title": "BAY AREA SLAPS",
+          "subtitle": "JOHNNY • AAHIGH",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "johnny/bay-boy-play-boy.mp3",
+          "title": "BAY BOY PLAY BOY",
+          "subtitle": "JOHNNY • AAHIGH",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "johnny/friday-jazz-.mp3",
+          "title": "FRIDAY JAZZ",
+          "subtitle": "JOHNNY • AAHIGH",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "johnny/slow-jazz.mp3",
+          "title": "SLOW JAZZ",
+          "subtitle": "JOHNNY • AAHIGH",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "johnny/war-inside-my-head.mp3",
+          "title": "WAR INSIDE MY HEAD",
+          "subtitle": "JOHNNY • AAHIGH",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        }
+      ]
+    },
+    {
+      "id": "johnny2",
+      "name": "JOHNNY 2",
+      "artwork": null,
+      "tracks": [
+        {
+          "file": "johnny2/bay-area-slaps 2.mp3",
+          "title": "BAY AREA SLAPS 2",
+          "subtitle": "JOHNNY 2 • AAHIGH",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "johnny2/bay-boy-play-boy 2.mp3",
+          "title": "BAY BOY PLAY BOY 2",
+          "subtitle": "JOHNNY 2 • AAHIGH",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "johnny2/friday-jazz- 2.mp3",
+          "title": "FRIDAY JAZZ 2",
+          "subtitle": "JOHNNY 2 • AAHIGH",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "johnny2/slow-jazz 2.mp3",
+          "title": "SLOW JAZZ 2",
+          "subtitle": "JOHNNY 2 • AAHIGH",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "johnny2/war-inside-my-head 2.mp3",
+          "title": "WAR INSIDE MY HEAD 2",
+          "subtitle": "JOHNNY 2 • AAHIGH",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",

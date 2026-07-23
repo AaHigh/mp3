@@ -12,7 +12,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="HIGH TOWER DISTRICT - MP3">
     <meta name="twitter:description" content="Original music from AAHIGH • Tower District, Fresno">
-    <meta name="twitter:image" content="https://mp3.ahightower.com/album_art.jpg">
+    <meta name="twitter:image" content="https://mp3.ahightower.com/album_art.png">
 
     <title>AAHIGH • mp3</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -188,7 +188,7 @@
                     <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
                     <span class="text-emerald-400 font-medium">ONLINE</span>
                 </div>
-                <div class="text-zinc-500 text-xs px-2" id="global-track-count">9 TRACKS</div>
+                <div class="text-zinc-500 text-xs px-2" id="global-track-count">23 TRACKS</div>
             </div>
         </div>
     </header>
@@ -444,23 +444,28 @@
         let canvas, ctx;
 
         // Fallback tracks (used when description.json is unavailable)
+        // Full root set as of 2026-07 — prefer description.json for multi-album + subdir support
         const fallbackTracks = [
             { num: 1, file: "cellchorus.mp3", title: "CELL CHORUS", subtitle: "AAHIGH ORIGINAL" },
             { num: 2, file: "dah-sing-you-larry-t.mp3", title: "DAH SING YOU LARRY T", subtitle: "AAHIGH ORIGINAL" },
             { num: 3, file: "deepbass.mp3", title: "DEEP BASS", subtitle: "AAHIGH ORIGINAL" },
             { num: 4, file: "every-day.mp3", title: "EVERY DAY", subtitle: "AAHIGH ORIGINAL" },
-            { num: 5, file: "farmaculture.mp3", title: "FARMACULTURE", subtitle: "AAHIGH ORIGINAL" },
-            { num: 6, file: "high.mp3", title: "HIGH", subtitle: "AAHIGH ORIGINAL" },
-            { num: 7, file: "most-insane.mp3", title: "MOST INSANE", subtitle: "AAHIGH ORIGINAL" },
-            { num: 8, file: "san-clemente-tower-trio.mp3", title: "SAN CLEMENTE TOWER TRIO", subtitle: "AAHIGH ORIGINAL" },
-            { num: 9, file: "shoes-on-dah-line.mp3", title: "SHOES ON DAH LINE", subtitle: "AAHIGH ORIGINAL" }
+            { num: 5, file: "eyes-gonna-make-sum-lee-ricks.mp3", title: "EYES GONNA MAKE SUM LEE RICKS", subtitle: "AAHIGH ORIGINAL" },
+            { num: 6, file: "farmaculture.mp3", title: "FARMACULTURE", subtitle: "AAHIGH ORIGINAL" },
+            { num: 7, file: "high.mp3", title: "HIGH", subtitle: "AAHIGH ORIGINAL" },
+            { num: 8, file: "miguel.mp3", title: "MIGUEL", subtitle: "AAHIGH ORIGINAL" },
+            { num: 9, file: "most-insane.mp3", title: "MOST INSANE", subtitle: "AAHIGH ORIGINAL" },
+            { num: 10, file: "nervous-looking-white-hoes.mp3", title: "NERVOUS LOOKING WHITE HOES", subtitle: "AAHIGH ORIGINAL" },
+            { num: 11, file: "reduction-to-absurdity.mp3", title: "REDUCTION TO ABSURDITY", subtitle: "AAHIGH ORIGINAL" },
+            { num: 12, file: "san-clemente-tower-trio.mp3", title: "SAN CLEMENTE TOWER TRIO", subtitle: "AAHIGH ORIGINAL" },
+            { num: 13, file: "shoes-on-dah-line.mp3", title: "SHOES ON DAH LINE", subtitle: "AAHIGH ORIGINAL" }
         ];
 
         function createFallbackAlbums() {
             return [{
                 id: 'root',
                 name: 'HIGH TOWER DISTRICT',
-                artwork: null,
+                artwork: 'album_art.png',
                 tracks: fallbackTracks.map((t, i) => ({ ...t, num: i + 1 }))
             }];
         }
@@ -493,7 +498,7 @@
                     throw new Error('Invalid albums array in description.json');
                 }
             } catch (err) {
-                console.warn('%c[AAHIGH] description.json not found or invalid — using fallback 9-track root album', 'color:#f80');
+                console.warn('%c[AAHIGH] description.json not found or invalid — using fallback 13-track root album', 'color:#f80');
                 albums = createFallbackAlbums();
                 currentAlbumId = 'root';
             }
