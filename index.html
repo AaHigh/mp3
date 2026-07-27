@@ -528,7 +528,7 @@
 
             try {
                 // 1. HEAD request — check for zero-byte files
-                const headRes = await fetch(filePath, { method: 'HEAD' });
+                const headRes = await fetch(encodeURI(filePath), { method: 'HEAD' });
                 const contentLength = headRes.headers.get('content-length');
 
                 if (contentLength && parseInt(contentLength, 10) === 0) {
@@ -542,7 +542,7 @@
 
                 // 2. Basic magic byte check (optional but helpful)
                 try {
-                    const byteRes = await fetch(filePath, {
+                    const byteRes = await fetch(encodeURI(filePath), {
                         headers: { 'Range': 'bytes=0-10' }
                     });
                     const buffer = await byteRes.arrayBuffer();
@@ -851,7 +851,7 @@
             }
 
             // Load and play
-            audio.src = track.file;
+            audio.src = encodeURI(track.file);
             audio.load();
 
             updateNowPlaying(index);
