@@ -8,6 +8,16 @@
       "artwork": "album_art.png",
       "tracks": [
         {
+          "file": "the-2nd.mp3",
+          "title": "The Second",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "A linguistic interstate freeway",
+          "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
+          "notes": "An expirment in multi-lingual expressions",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
           "file": "cellchorus.mp3",
           "title": "CELL CHORUS",
           "subtitle": "AAHIGH ORIGINAL",
