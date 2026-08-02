@@ -7,6 +7,26 @@
       "name": "HIGH TOWER DISTRICT",
       "artwork": "album_art.png",
       "tracks": [
+	{
+          "file": "club-house-trap-remix.mp3",
+          "title": "experimental",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "Boom Bap about Hightower's Arcade Interests",
+          "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
+          "notes": "An experiment in style",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+	{
+          "file": "the-dude.mp3",
+          "title": "the dude",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "Boom Bap about Hightower's Arcade Interests",
+          "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
+          "notes": "An experiment in style",
+          "derivativeLinks": [],
+          "artwork": null
+        },
         {
           "file": "hightower-automatic.mp3",
           "title": "HIGHTOWER AUTOMATIC",
