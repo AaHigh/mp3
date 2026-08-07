@@ -7,7 +7,7 @@
       "name": "HIGH TOWER DISTRICT",
       "artwork": "album_art.png",
       "tracks": [
-	{
+        {
           "file": "club-house-trap-remix.mp3",
           "title": "experimental",
           "subtitle": "AAHIGH ORIGINAL",
@@ -17,7 +17,7 @@
           "derivativeLinks": [],
           "artwork": null
         },
-	{
+        {
           "file": "the-dude.mp3",
           "title": "the dude",
           "subtitle": "AAHIGH ORIGINAL",
@@ -44,16 +44,6 @@
           "description": "A linguistic interstate freeway",
           "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
           "notes": "An experiment in multi-lingual expressions",
-          "derivativeLinks": [],
-          "artwork": null
-        },
-        {
-          "file": "hightower-automatic.mp3",
-          "title": "HIGHTOWER AUTOMATIC",
-          "subtitle": "AAHIGH ORIGINAL",
-          "description": "Some boom bap trap",
-          "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
-          "notes": "721 Street",
           "derivativeLinks": [],
           "artwork": null
         },
@@ -170,6 +160,66 @@
         {
           "file": "shoes-on-dah-line.mp3",
           "title": "SHOES ON DAH LINE",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "club-bass-drop.mp3",
+          "title": "CLUB BASS DROP",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "gottlieb-supreme.mp3",
+          "title": "GOTTLIEB SUPREME",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "Hyperbolic comedy trap bass drop. AI playing 5D Qbert.",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "nervous-looking-white-hoes.mp3",
+          "title": "NERVOUS LOOKING WHITE HOES",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "tldr.mp3",
+          "title": "TLDR",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "untitled.mp3",
+          "title": "UNTITLED",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "",
+          "credits": "Aaron Hightower",
+          "notes": "",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
+          "file": "untitled2.mp3",
+          "title": "UNTITLED 2",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "",
           "credits": "Aaron Hightower",
