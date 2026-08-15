@@ -8,6 +8,16 @@
       "artwork": "album_art.png",
       "tracks": [
         {
+          "file": "FrawdNCalifornia.mp3",
+          "title": "experimental",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "fraud in CA",
+          "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
+          "notes": "An experiment in style",
+          "derivativeLinks": [],
+          "artwork": null
+        },
+        {
           "file": "club-house-trap-remix.mp3",
           "title": "experimental",
           "subtitle": "AAHIGH ORIGINAL",
