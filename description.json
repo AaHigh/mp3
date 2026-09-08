@@ -1,6 +1,7 @@
 {
-  "siteTitle": "AAHIGH • mp3",
+  "siteTitle": "AAHIGH \u2022 mp3",
   "defaultAlbumId": "root",
+  "catalogNote": "Only tracks listed here play. frodd.mp3 lives on disk as an omitted alt and must never appear here. If it plays, the player is inferring files from the folder.",
   "albums": [
     {
       "id": "root",
@@ -9,233 +10,212 @@
       "tracks": [
         {
           "file": "FrawdNCalifornia.mp3",
-          "title": "experimental",
+          "title": "FrawdNCalifornia",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "fraud in CA",
-          "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
+          "credits": "Written, performed & produced by Aaron Hightower \u2022 Tower District, Fresno \u2022 2026",
           "notes": "An experiment in style",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 5271545
         },
         {
           "file": "club-house-trap-remix.mp3",
-          "title": "experimental",
+          "title": "club-house-trap-remix",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "Boom Bap about Hightower's Arcade Interests",
-          "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
+          "credits": "Written, performed & produced by Aaron Hightower \u2022 Tower District, Fresno \u2022 2026",
           "notes": "An experiment in style",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 3929238
         },
         {
           "file": "the-dude.mp3",
-          "title": "the dude",
+          "title": "the-dude",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "Boom Bap about Hightower's Arcade Interests",
-          "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
+          "credits": "Written, performed & produced by Aaron Hightower \u2022 Tower District, Fresno \u2022 2026",
           "notes": "An experiment in style",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 4581270
         },
         {
           "file": "hightower-automatic.mp3",
-          "title": "HIGHTOWER AUTOMATIC",
+          "title": "hightower-automatic",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "Boom Bap about Hightower's Arcade Interests",
-          "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
+          "credits": "Written, performed & produced by Aaron Hightower \u2022 Tower District, Fresno \u2022 2026",
           "notes": "An experiment in style",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 3045798
         },
         {
           "file": "the-2nd.mp3",
-          "title": "THE SECOND",
+          "title": "the-2nd",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "A linguistic interstate freeway",
-          "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
+          "credits": "Written, performed & produced by Aaron Hightower \u2022 Tower District, Fresno \u2022 2026",
           "notes": "An experiment in multi-lingual expressions",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 6855510
         },
         {
           "file": "cellchorus.mp3",
-          "title": "CELL CHORUS",
+          "title": "cellchorus",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "A choral, layered piece with cellular motifs and evolving textures.",
-          "credits": "Written, performed & produced by Aaron Hightower • Tower District, Fresno • 2026",
+          "credits": "Written, performed & produced by Aaron Hightower \u2022 Tower District, Fresno \u2022 2026",
           "notes": "Part of the initial CELLTOWER sound explorations",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 2677782
         },
         {
           "file": "dah-sing-you-larry-t.mp3",
-          "title": "DAH SING YOU LARRY T",
+          "title": "dah-sing-you-larry-t",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "The singularity",
-          "credits": "Aaron Hightower",
+          "credits": "Written, performed & produced by Aaron Hightower \u2022 Tower District, Fresno \u2022 2026",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 3210630
         },
         {
           "file": "deepbass.mp3",
-          "title": "DEEP BASS",
+          "title": "deepbass",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "Heavy sub frequencies and rolling basslines for late-night sessions.",
-          "credits": "Aaron Hightower",
+          "credits": "Written, performed & produced by Aaron Hightower \u2022 Tower District, Fresno \u2022 2026",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 2859654
         },
         {
           "file": "every-day.mp3",
-          "title": "EVERY DAY",
+          "title": "every-day",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 2480022
         },
         {
           "file": "eyes-gonna-make-sum-lee-ricks.mp3",
-          "title": "EYES GONNA MAKE SUM LEE RICKS",
+          "title": "eyes-gonna-make-sum-lee-ricks",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 2584182
         },
         {
           "file": "farmaculture.mp3",
-          "title": "FARMACULTURE",
+          "title": "farmaculture",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 3947262
         },
         {
           "file": "high.mp3",
-          "title": "HIGH",
+          "title": "high",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "Anthemic high-energy track representing the High Tower spirit.",
-          "credits": "Aaron Hightower",
+          "credits": "Written, performed & produced by Aaron Hightower \u2022 Tower District, Fresno \u2022 2026",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 6470646
         },
         {
           "file": "miguel.mp3",
-          "title": "MIGUEL",
+          "title": "miguel",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 2573311
         },
         {
           "file": "most-insane.mp3",
-          "title": "MOST INSANE",
+          "title": "most-insane",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 5932638
         },
         {
           "file": "reduction-to-absurdity.mp3",
-          "title": "REDUCTION TO ABSURDITY",
+          "title": "reduction-to-absurdity",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 5064534
         },
         {
           "file": "san-clemente-tower-trio.mp3",
-          "title": "SAN CLEMENTE TOWER TRIO",
+          "title": "san-clemente-tower-trio",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 5616078
         },
         {
           "file": "shoes-on-dah-line.mp3",
-          "title": "SHOES ON DAH LINE",
+          "title": "shoes-on-dah-line",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
-        },
-        {
-          "file": "club-bass-drop.mp3",
-          "title": "CLUB BASS DROP",
-          "subtitle": "AAHIGH ORIGINAL",
-          "description": "",
-          "credits": "Aaron Hightower",
-          "notes": "",
-          "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 4599846
         },
         {
           "file": "gottlieb-supreme.mp3",
-          "title": "GOTTLIEB SUPREME",
+          "title": "gottlieb-supreme",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "Hyperbolic comedy trap bass drop. AI playing 5D Qbert.",
-          "credits": "Aaron Hightower",
+          "credits": "Written, performed & produced by Aaron Hightower \u2022 Tower District, Fresno \u2022 2026",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 2989878
         },
         {
           "file": "nervous-looking-white-hoes.mp3",
-          "title": "NERVOUS LOOKING WHITE HOES",
+          "title": "nervous-looking-white-hoes",
           "subtitle": "AAHIGH ORIGINAL",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
-        },
-        {
-          "file": "tldr.mp3",
-          "title": "TLDR",
-          "subtitle": "AAHIGH ORIGINAL",
-          "description": "",
-          "credits": "Aaron Hightower",
-          "notes": "",
-          "derivativeLinks": [],
-          "artwork": null
-        },
-        {
-          "file": "untitled.mp3",
-          "title": "UNTITLED",
-          "subtitle": "AAHIGH ORIGINAL",
-          "description": "",
-          "credits": "Aaron Hightower",
-          "notes": "",
-          "derivativeLinks": [],
-          "artwork": null
-        },
-        {
-          "file": "untitled2.mp3",
-          "title": "UNTITLED 2",
-          "subtitle": "AAHIGH ORIGINAL",
-          "description": "",
-          "credits": "Aaron Hightower",
-          "notes": "",
-          "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 1616550
         }
       ]
     },
@@ -246,53 +226,58 @@
       "tracks": [
         {
           "file": "johnny/bay-area-slaps.mp3",
-          "title": "BAY AREA SLAPS",
-          "subtitle": "JOHNNY • AAHIGH",
+          "title": "bay-area-slaps",
+          "subtitle": "JOHNNY \u2022 AAHIGH",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 4275126
         },
         {
           "file": "johnny/bay-boy-play-boy.mp3",
-          "title": "BAY BOY PLAY BOY",
-          "subtitle": "JOHNNY • AAHIGH",
+          "title": "bay-boy-play-boy",
+          "subtitle": "JOHNNY \u2022 AAHIGH",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 4398198
         },
         {
           "file": "johnny/friday-jazz-.mp3",
-          "title": "FRIDAY JAZZ",
-          "subtitle": "JOHNNY • AAHIGH",
+          "title": "friday-jazz-",
+          "subtitle": "JOHNNY \u2022 AAHIGH",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 7645470
         },
         {
           "file": "johnny/slow-jazz.mp3",
-          "title": "SLOW JAZZ",
-          "subtitle": "JOHNNY • AAHIGH",
+          "title": "slow-jazz",
+          "subtitle": "JOHNNY \u2022 AAHIGH",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 7201470
         },
         {
           "file": "johnny/war-inside-my-head.mp3",
-          "title": "WAR INSIDE MY HEAD",
-          "subtitle": "JOHNNY • AAHIGH",
+          "title": "war-inside-my-head",
+          "subtitle": "JOHNNY \u2022 AAHIGH",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 3957510
         }
       ]
     },
@@ -303,53 +288,58 @@
       "tracks": [
         {
           "file": "johnny2/bay-area-slaps 2.mp3",
-          "title": "BAY AREA SLAPS 2",
-          "subtitle": "JOHNNY 2 • AAHIGH",
+          "title": "bay-area-slaps-2",
+          "subtitle": "JOHNNY 2 \u2022 AAHIGH",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 4300062
         },
         {
           "file": "johnny2/bay-boy-play-boy 2.mp3",
-          "title": "BAY BOY PLAY BOY 2",
-          "subtitle": "JOHNNY 2 • AAHIGH",
+          "title": "bay-boy-play-boy-2",
+          "subtitle": "JOHNNY 2 \u2022 AAHIGH",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 3816150
         },
         {
           "file": "johnny2/friday-jazz- 2.mp3",
-          "title": "FRIDAY JAZZ 2",
-          "subtitle": "JOHNNY 2 • AAHIGH",
+          "title": "friday-jazz--2",
+          "subtitle": "JOHNNY 2 \u2022 AAHIGH",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 6823278
         },
         {
           "file": "johnny2/slow-jazz 2.mp3",
-          "title": "SLOW JAZZ 2",
-          "subtitle": "JOHNNY 2 • AAHIGH",
+          "title": "slow-jazz-2",
+          "subtitle": "JOHNNY 2 \u2022 AAHIGH",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 6828630
         },
         {
           "file": "johnny2/war-inside-my-head 2.mp3",
-          "title": "WAR INSIDE MY HEAD 2",
-          "subtitle": "JOHNNY 2 • AAHIGH",
+          "title": "war-inside-my-head-2",
+          "subtitle": "JOHNNY 2 \u2022 AAHIGH",
           "description": "",
           "credits": "Aaron Hightower",
           "notes": "",
           "derivativeLinks": [],
-          "artwork": null
+          "artwork": null,
+          "bytes": 4309398
         }
       ]
     }

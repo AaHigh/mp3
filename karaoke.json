@@ -1,0 +1,9 @@
+{
+  "_comment": "Optional karaoke sidecar. Key is the exact track file path from description.json. Times are seconds from the start of the MP3 file, not the trimmed window. If this file is missing, the player still runs. Lyrics only render when EQ + LYRICS is on.",
+  "FrawdNCalifornia.mp3": {
+    "lines": [
+      { "t": 0.0, "text": "Add timed lines here." },
+      { "t": 8.0, "text": "t is seconds from the start of the file." }
+    ]
+  }
+}
