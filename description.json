@@ -9,6 +9,17 @@
       "artwork": "album_art.png",
       "tracks": [
         {
+          "file": "remember-the-kids.mp3",
+          "title": "remember-the-kids.mp3",
+          "subtitle": "AAHIGH ORIGINAL",
+          "description": "made for x becerra",
+          "credits": "Written, performed & produced by Aaron Hightower \u2022 Tower District, Fresno \u2022 9/11/2026",
+          "notes": "As every municipality falls prey to fraud",
+          "derivativeLinks": [],
+          "artwork": null,
+          "bytes": 3745123
+        },
+        {
           "file": "fettyfold.mp3",
           "title": "fettyfold.mp3",
           "subtitle": "AAHIGH ORIGINAL",
